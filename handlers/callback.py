@@ -1,7 +1,6 @@
 from aiogram import types, Dispatcher
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import bot, dp
-import random
 
 
 async def quiz_2(call: types.CallbackQuery):
@@ -53,22 +52,8 @@ async def quiz_3(call: types.CallbackQuery):
         # open_period=5,
     )
 
-# @dp.message_handler(commands=['mem'])
-async def mem(message: types.Message):
-    mems = [
-        'media/mem1.jpg',
-        'media/mem2.jpg',
-        'media/mem3.jpg',
-        'media/mem4.jpg',
-        'media/mem5.jpg'
-    ]
-    mem = open(random.choice(mems), 'rb')
-    await bot.send_photo(message.chat.id, photo=mem)
-
-
 
 
 def register_handlers_callback(dp: Dispatcher):
     dp.register_callback_query_handler(quiz_2, text="button_call_1")
     dp.register_callback_query_handler(quiz_3, text="button_call_2")
-    dp.register_message_handler(mem, commands=['mem'])
