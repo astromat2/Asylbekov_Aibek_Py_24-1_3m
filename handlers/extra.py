@@ -28,6 +28,11 @@ async def echo(message: types.Message):
         if message.chat.type != 'private':
             await bot.send_dice(message.chat.id, emoji=random.choice(dices))
 
+    await bot.send_message(message.chat.id, message.text)
+    a = int(message.text)
+    if a:
+        await bot.send_message(message.chat.id, a ** 2)
+
 
 def register_handler_extra(dp: Dispatcher):
     dp.register_message_handler(echo)

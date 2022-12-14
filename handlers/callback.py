@@ -20,7 +20,7 @@ async def quiz_2(call: types.CallbackQuery):
     ]
 
     await bot.send_poll(
-        chat_id=call.from_user.id,
+        chat_id=call.message.chat.id,
         question=question,
         options=answers,
         is_anonymous=False,
@@ -44,7 +44,7 @@ async def quiz_3(call: types.CallbackQuery):
     ]
 
     await bot.send_poll(
-        chat_id=call.from_user.id,
+        chat_id=call.message.chat.id,
         question=question,
         options=answers,
         is_anonymous=False,

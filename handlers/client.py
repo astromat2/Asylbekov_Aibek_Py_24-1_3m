@@ -6,12 +6,15 @@ from keyboards.client_kb import start_markup
 
 # @dp.message_handler(commands=['start', 'help'])
 async def start_handler(message: types.Message):
-    await bot.send_message(chat_id=message.from_user.id,
-                           text=f"Приветствую Владыка {message.from_user.first_name}",
-                           reply_markup=start_markup)
-    # await message.answer("/quiz - атветь на вопросы, проверь насколько ты умный")
-    # await message.answer('/mem - мем')
-    # await message.answer('Или введи любое число')
+    # await bot.send_message(chat_id=message.chat.id,
+    #                        text=f"Приветствую Владыка {message.from_user.first_name}",
+    #                        reply_markup=start_markup)
+
+    await bot.send_message(chat_id=message.chat.id,
+                           text=f"Приветствую Владыка {message.from_user.first_name}")
+    await message.answer("/quiz - атветь на вопросы, проверь насколько ты умный")
+    await message.answer('/mem - мем')
+    await message.answer('Или введи любое число')
 
 
 async def info_handler(message: types.Message):
@@ -20,7 +23,7 @@ async def info_handler(message: types.Message):
 
 async def pin(message: types.Message):
     if not message.reply_to_message:
-        await message.reply('команда должна быть ответов на сообщение')
+        await message.reply('Команда должна быть ответом на сообщение.')
     else:
         await bot.pin_chat_message(message.chat.id, message.message_id)
 
@@ -39,7 +42,7 @@ async def quiz_1(message: types.Message):
     ]
 
     await bot.send_poll(
-        chat_id=message.from_user.id,
+        chat_id=message.chat.id,
         question=question,
         options=answers,
         is_anonymous=False,
@@ -53,7 +56,7 @@ async def quiz_1(message: types.Message):
 async def dice(message: types.Message):
     bot_dice = await bot.send_dice(message.chat.id)
     user_dice = await bot.send_dice(message.chat.id)
-    await message.answer("первый игральный кость бота а второй игрока")
+    await message.answer("Первая игральная кость бота, а вторая игрока")
     if bot_dice.dice.value > user_dice.dice.value:
         await message.answer(f"Бот выиграл у {message.from_user.full_name}!")
     elif bot_dice.dice.value == user_dice.dice.value:
