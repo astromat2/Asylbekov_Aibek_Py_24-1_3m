@@ -15,6 +15,8 @@ async def start_handler(message: types.Message):
                            text=f"Приветствую Владыка {message.from_user.first_name}")
     await message.answer("/quiz - атветь на вопросы, проверь насколько ты умный")
     await message.answer('/mem - мем')
+    await message.answer('/reg - Регистрация на менторство')
+    await message.answer('/dice - Игральная кость')
     await message.answer('Или введи любое число')
 
 
