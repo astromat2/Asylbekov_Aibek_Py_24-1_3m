@@ -34,7 +34,7 @@ async def load_id(message: types.Message, state: FSMContext):
         await message.answer("Имя?", reply_markup=client_kb.cancel_markup)
 
     except:
-        await bot.send_message(message.from_user.id, "ID состоит только из цифр")
+        await bot.send_message(message.from_user.id, "ID должен состоять из цифр!")
 
 
 async def load_name(message: types.Message, state: FSMContext):
