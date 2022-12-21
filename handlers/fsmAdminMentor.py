@@ -4,6 +4,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from config import bot, ADMINS
 from keyboards import client_kb
+from database.bot_db import sql_command_insert
 
 
 class FSMAdmin(StatesGroup):
@@ -25,10 +26,15 @@ async def fsm_start(message: types.Message):
 
 
 async def load_id(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['id'] = message.text
-    await FSMAdmin.next()
-    await message.answer("Имя?", reply_markup=client_kb.cancel_markup)
+    try:
+        async with state.proxy() as data:
+            data['id'] = int(message.text)
+
+        await FSMAdmin.next()
+        await message.answer("Имя?", reply_markup=client_kb.cancel_markup)
+
+    except:
+        await bot.send_message(message.from_user.id, "ID состоит только из цифр")
 
 
 async def load_name(message: types.Message, state: FSMContext):
@@ -69,7 +75,7 @@ async def load_group(message: types.Message, state: FSMContext):
 
 async def submit(message: types.Message, state: FSMContext):
     if message.text.lower() == "да":
-        # Запись в БД
+        await sql_command_insert(state)
         await state.finish()
         await message.answer("Ты теперь ментор будешь рубить капусту😏")
     elif message.text.lower() == "нет":
@@ -77,6 +83,7 @@ async def submit(message: types.Message, state: FSMContext):
         await message.answer("Ну и пошел ты!")
     else:
         await message.answer('НИПОНЯЛ!?')
+
 
 async def cancel_reg(message: types.Message, state: FSMContext):
     current_state = await state.get_state()

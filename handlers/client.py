@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import bot, dp
 from keyboards.client_kb import start_markup
 import random
-
+from database.bot_db import sql_command_random
 
 # @dp.message_handler(commands=['start', 'help'])
 async def start_handler(message: types.Message):
