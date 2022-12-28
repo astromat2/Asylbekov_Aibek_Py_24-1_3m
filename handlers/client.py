@@ -4,6 +4,8 @@ from config import bot, dp
 from keyboards.client_kb import start_markup
 import random
 from database.bot_db import sql_command_random
+from par.game import parser
+
 
 # @dp.message_handler(commands=['start', 'help'])
 async def start_handler(message: types.Message):
@@ -55,6 +57,7 @@ async def quiz_1(message: types.Message):
         reply_markup=markup
     )
 
+
 async def mem(message: types.Message):
     mems = [
         'media/mem1.jpg',
@@ -79,6 +82,17 @@ async def dice(message: types.Message):
         await message.answer(f"{message.from_user.full_name} выиграл у бота!")
 
 
+async def get_games(message: types.Message):
+    game = parser()
+    for i in game:
+        await message.answer(
+            f"{i['image']}\n"
+            f"{i['title']}\n"
+            f"{i['link']}\n"
+            f"{i['date']}\n"
+        )
+
+
 def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(start_handler, commands=['start', 'help'])
     dp.register_message_handler(quiz_1, commands=['quiz'])
@@ -86,3 +100,4 @@ def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(pin, commands=['pin'], commands_prefix='!')
     dp.register_message_handler(dice, commands=['dice'])
     dp.register_message_handler(mem, commands=['mem'])
+    dp.register_message_handler(get_games, commands=['Games'])
