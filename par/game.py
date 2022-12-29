@@ -19,11 +19,14 @@ def get_data(html):
     items = soup.find_all('div', class_="entry")
     game = []
     for item in items:
+        date = item.find('div', class_='entry__info-categories')
+        if date is None:
+            continue
         card = {
-            'image': item.find('div', class_='entry__content-image'),
-            'title': item.find('div', class_='entry__title h2').find('a').get('href'),
-            'link': item.find('div', class_='entry__title h2').find('a').string,
-            'date': item.find('div', class_='entry__info-categories')
+            'image': URL + item.find('img').get('src'),
+            'link': item.find('div', class_='entry__title h2').find('a').get('href'),
+            'title': item.find('div', class_='entry__title h2').find('a').string,
+            'date': item.find('div', class_='entry__info-categories').string
         }
         game.append(card)
     return game
@@ -33,7 +36,7 @@ def parser():
     html = get_html(URL)
     if html.status_code == 200:
         game = []
-        for i in range(1, 2):
+        for i in range(1, 3):
             html = get_html(f"{URL}page/{i}/")
             current_page = get_data(html.text)
             game.extend(current_page)

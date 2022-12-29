@@ -85,12 +85,13 @@ async def dice(message: types.Message):
 async def get_games(message: types.Message):
     game = parser()
     for i in game:
-        await message.answer(
-            f"{i['image']}\n"
-            f"{i['title']}\n"
-            f"{i['link']}\n"
-            f"{i['date']}\n"
-        )
+        await message.answer_photo(photo=
+                             f"{i['image']}\n",
+                             caption=
+                             f"{i['title']}\n"
+                             f"Сайт: {i['link']}\n"
+                             f"Дата добавления: {i['date']}\n"
+                             )
 
 
 def register_handlers_client(dp: Dispatcher):
