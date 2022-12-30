@@ -4,7 +4,7 @@ from config import bot, dp
 from keyboards.client_kb import start_markup
 import random
 from database.bot_db import sql_command_random
-from par.game import parser
+from par.game import ParGame
 
 
 # @dp.message_handler(commands=['start', 'help'])
@@ -83,7 +83,7 @@ async def dice(message: types.Message):
 
 
 async def get_games(message: types.Message):
-    game = parser()
+    game = ParGame.parser()
     for i in game:
         await message.answer_photo(photo=
                              f"{i['image']}\n",
